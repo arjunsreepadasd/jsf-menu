@@ -17,8 +17,8 @@ import java.util.List;
  * @author Kevin
  */
 public class MenuTable<T> {
-    public List<Row<T>> rows;
-    private List<Subscriber<T>> subscribers = new ArrayList<>();
+    private List<Row<T>> rows;
+    protected List<Subscriber<T>> subscribers = new ArrayList<>();
     private int noOfColumns;
     
     public MenuTable(int noOfColumns) {
