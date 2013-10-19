@@ -15,10 +15,13 @@
  */
 package nz.co.kevindoran.category;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 /**
  *
  * @author Kevin
  */
 public class AuctionCategory {
-    private AuctionCategory childCategory;
+    private Collection<AuctionCategory> childCategories = new ArrayList<>();
 }

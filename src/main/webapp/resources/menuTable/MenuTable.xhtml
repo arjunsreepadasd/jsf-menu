@@ -13,9 +13,9 @@
 
     <cc:implementation>
         <table>
-            <ui:repeat id="repeat1" value="#{cc.attrs.model.rows}" var="row">
+            <ui:repeat id="repeat1" value="#{cc.attrs.model.rows}" var="menuRow">
                 <tr>
-                <ui:repeat id="repeat2" value="#{row.contents}" var="entry">
+                <ui:repeat id="repeat2" value="#{menuRow.contents}" var="entry">
                     <td>
                         <h:commandLink actionListener="#{cc.attrs.model.setSelected(entry)}" value="#{entry.toString()}">
                             <f:ajax render="#{cc.attrs.updateID}"/>

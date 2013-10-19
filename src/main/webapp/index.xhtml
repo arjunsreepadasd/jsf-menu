@@ -11,6 +11,7 @@
             <h2>JSF Menu Table Test</h2>
             Current category: #{randomMenu.currentCategory}
             <mt:MenuTable model="#{randomMenu.menuTable}" updateID="@form"/>
+            <mt:Breadcrumb model="#{randomMenu.breadcrumb}" updateID="@form" />
         </h:form>
     </h:body>
 </html>

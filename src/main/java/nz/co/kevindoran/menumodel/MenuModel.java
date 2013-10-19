@@ -8,8 +8,11 @@ import javax.faces.event.AbortProcessingException;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.ActionListener;
 import nz.co.kevindoran.subscriber.Subscriber;
+import org.primefaces.model.menu.DefaultMenuItem;
+import org.primefaces.model.menu.DefaultMenuModel;
+import org.primefaces.model.menu.MenuItem;
 
-import org.primefaces.component.menuitem.MenuItem;
+
 
 /*
  * This class has functionality that can be generalised to make a base for 
@@ -17,8 +20,9 @@ import org.primefaces.component.menuitem.MenuItem;
  * dependency will make it general purpose: allow programmers to decide how
  * to recreate a MenuItem.
  */
+@Deprecated // As of Primefaces 4, this class will not work. See needed fix below.
 public class MenuModel<T> extends
-        MenuBase implements ActionListener {
+        DefaultMenuModel implements ActionListener {
 
     private static final long serialVersionUID = 784711253072089741L;
     protected T category;
@@ -30,10 +34,10 @@ public class MenuModel<T> extends
     }
 	
     public void setContents(Collection<T> objects) {
-        resetContents();
+        getElements().clear();
         for(T o : objects) {
             MenuItem menuItem = createMenuItem(o);
-            addMenuItem(menuItem);
+            addElement(menuItem);
         }
     }
     
@@ -47,7 +51,7 @@ public class MenuModel<T> extends
             throws AbortProcessingException {
         if(event.getSource().getClass() == MenuItem.class) {
              MenuItem sourceItem = (MenuItem) event.getSource();
-             T latestItem = (T) sourceItem.getAttributes().get("menuObject");
+             T latestItem = (T) sourceItem.getParams().get("menuObject").get(0);
              updateSubscribers(latestItem);
         }
     }
@@ -63,17 +67,18 @@ public class MenuModel<T> extends
      * @return the created MenuItem.
      */
     public MenuItem createMenuItem(T item) {
-        MenuItem menuItem = new MenuItem();
+        DefaultMenuItem menuItem = new DefaultMenuItem();
         menuItem.setValue(item.toString());
-        menuItem.setId(uiViewRoot.createUniqueId());
+        //menuItem.setId(uiViewRoot.createUniqueId());
         if(updateID == null) {
             menuItem.setAjax(false);
         }
         else {
             menuItem.setUpdate(updateID);
         }
-        menuItem.addActionListener(this);
-        menuItem.getAttributes().put("menuObject", item);
+        // TODO: find alternative
+        //menuItem.addActionListener(this);
+        menuItem.setParam("menuObject", item);
         return menuItem;
     }
 
